@@ -1,73 +1,35 @@
-# Node, Express and TypeScript Project Template
+# Code Snippets API & Dashboard
 
-Welcome to the **Node, Express and TypeScript Project Template**! This repository serves as a starter template for
-building Node.js applications with TypeScript. It comes pre-configured with models, controllers, routes, and bundling,
-so you can focus on building your application.
+This project is a **Code Snippets API** built with **Node.js**, **Express**, and **Mongoose**, allowing users to store,
+tag, share, and manage code snippets. It includes a **RESTful API** backend and a **Dashboard** frontend built using *
+*EJS** templates for viewing and managing code snippets.
 
 ## Features
 
-- **TypeScript**: Strongly typed language for writing robust and maintainable code.
-- **Project Structure**: Organized folder structure with models, controllers, and routes.
-- **Bundling pkgroll**: Pre-configured with a bundler for efficient builds.
-- **TSX**: For automatic server restarts an running typescript during development.
-- **Dependency Management**: Configured with npm.
+- **CRUD operations for code snippets:**
+    - Create, Read, Update, and Delete code snippets.
+    - Each snippet includes a title, code, language, tags, and an optional expiration time.
 
-## Project Structure
+- **Filtering and Pagination:**
+    - Filter snippets by language and tags.
+    - Pagination support for managing large lists of snippets.
 
-```
-├── src
-│   ├── controllers
-│   │   └── snippetController.ts
-│   ├── middleware
-│   │   └── exampleMiddleware.ts
-│   ├── models
-│   │   └── snippetModel.ts
-│   ├── routes
-│   │   └── snippetRoutes.ts
-│   └── server.ts    // Main entry point of the application
-├── dist             // Compiled output (auto-generated)
-├── package.json     // Project dependencies and scripts
-├──.gitignore        // Ignore files to github
-├── tsconfig.json    // TypeScript configuration
-└── README.md        // Project documentation
-```
+- **Expiration:**
+    - Code snippets can expire after a specified time.
 
-## Getting Started
+- **History:**
+    - Track updates to each snippet (optional version history).
 
-### 1. Start Development Server
+- **Frontend Dashboard:**
+    - A simple dashboard to create and view code snippets.
+    - Provides filtering and tag-based search.
+    - Option to delete snippets directly from the dashboard.
 
-Run the development server with hot-reloading:
+## Technologies Used
 
-```bash
-npm run dev
-```
-
-### 2. Build the Project
-
-Compile TypeScript files to JavaScript:
-
-```bash
-npm run build
-```
-
-### 3. Start the Production Server
-
-After building the project, start the server:
-
-```bash
-npm start
-```
-
-## Scripts
-
-- `dev`: Starts the development server with hot-reloading.
-- `build`: Compiles the TypeScript source code to JavaScript.
-- `start`: Starts the production server.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Happy coding! 🎉
+- **Node.js** - JavaScript runtime environment for the backend.
+- **Express** - Web framework for building the API.
+- **MongoDB** - Database for storing snippets (via Mongoose ORM).
+- **Mongoose** - MongoDB Object Modeling tool for Node.js.
+- **EJS** - Template engine for rendering the frontend views.
+- **HTML/CSS/JavaScript** - For building the frontend dashboard.
