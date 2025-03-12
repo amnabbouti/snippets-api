@@ -5,36 +5,97 @@ import {config} from '../config/config';
 export async function createSnippet(req: Request, res: Response) {
     try {
         const {title, code, language, tags, expiresIn} = req.body;
-
         if (!title || !code || !language) {
             return res.status(400).json({error: 'Title, code, and language are required'});
         }
-
         const encodedCode = Buffer.from(code).toString('base64');
-
         const snippetData: Partial<ISnippet> = {
             title,
             code: encodedCode,
             language,
             tags: tags || [],
         };
-
         if (expiresIn) {
             snippetData.expiresAt = new Date(Date.now() + Number(expiresIn) * 1000);
         }
-
         const snippet = new Snippet(snippetData);
         await snippet.save();
-
         if (config.nodeEnv === 'development') {
             console.log(`Snippet created: ${title}`);
         }
-
         res.status(201).json({
             ...snippet.toObject(),
-            code, // Return decoded code in response
+            code,
         });
     } catch (error: any) {
         res.status(400).json({error: error.message});
+    }
+}
+
+export async function getAllSnippets(req: Request, res: Response) {
+    try {
+        const {
+            language,
+            tags,
+            page = '1',
+            limit = '10',
+            sort = 'createdAt',
+            order = 'desc',
+        } = req.query;
+
+        const query: any = {
+            $or: [
+                {expiresAt: {$exists: false}},
+                {expiresAt: {$gte: new Date()}},
+            ],
+        };
+        if (language) {
+            query.language = {$regex: new RegExp(language as string, 'i')};
+        }
+        if (tags) {
+            const tagArray = (tags as string).split(',').map((tag) => tag.trim());
+            query.tags = {$all: tagArray.map((tag) => new RegExp(tag, 'i'))};
+        }
+        const pageNum = parseInt(page as string, 10);
+        const limitNum = parseInt(limit as string, 10);
+        const skip = (pageNum - 1) * limitNum;
+        const sortOrder = order === 'desc' ? -1 : 1;
+        const sortField = sort as string;
+        const snippets = await Snippet.find(query)
+            .sort({[sortField]: sortOrder})
+            .skip(skip)
+            .limit(limitNum);
+        const decodedSnippets = snippets.map((snippet) => ({
+            ...snippet.toObject(),
+            code: Buffer.from(snippet.code, 'base64').toString('utf-8'),
+        }));
+        const total = await Snippet.countDocuments(query);
+        res.json({
+            snippets: decodedSnippets,
+            pagination: {
+                currentPage: pageNum,
+                totalPages: Math.ceil(total / limitNum),
+                totalItems: total,
+                limit: limitNum,
+            },
+        });
+    } catch (error: any) {
+        res.status(500).json({error: error.message});
+    }
+}
+
+export async function deleteSnippet(req: Request, res: Response) {
+    try {
+        const {id} = req.params;
+        const snippet = await Snippet.findByIdAndDelete(id);
+        if (!snippet) {
+            return res.status(404).json({error: 'Snippet not found'});
+        }
+        if (config.nodeEnv === 'development') {
+            console.log(`Snippet deleted: ${snippet.title}`);
+        }
+        res.status(204).send();
+    } catch (error: any) {
+        res.status(500).json({error: error.message});
     }
 }
