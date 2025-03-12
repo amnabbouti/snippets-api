@@ -1,34 +1,28 @@
-// Imports
-import "dotenv/config";
-import cors from "cors";
-import express from "express";
-import { notFound } from "./controllers/notFoundController";
-import testRoutes from "./routes/exampleRoutes";
-import { helloMiddleware } from "./middleware/exampleMiddleware";
-import mongoose from "mongoose";
+import express, {Express, Request, Response} from 'express';
+import mongoose from 'mongoose';
+import {config} from './config/config';
+import snippetRoutes from './routes/snippetRoutes';
 
-// Variables
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app: Express = express();
 
-// Middleware
-app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
-// Routes
-app.use("/api", helloMiddleware, testRoutes);
-app.all("*", notFound);
-
-// Database connection
-try {
-  await mongoose.connect(process.env.MONGO_URI!);
-  console.log("Database connection OK");
-} catch (err) {
-  console.error(err);
-  process.exit(1);
+// MongoDB connection
+async function connectDB() {
+    try {
+        await mongoose.connect(config.mongoUri);
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+        process.exit(1);
+    }
 }
 
-// Server Listening
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}! 🚀`);
+app.use('/api', snippetRoutes);
+
+app.listen(config.port, () => {
+    console.log(`Server running on port ${config.port} in ${config.nodeEnv} mode`);
+    connectDB();
 });

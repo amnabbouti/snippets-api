@@ -1,6 +1,8 @@
 # Node, Express and TypeScript Project Template
 
-Welcome to the **Node, Express and TypeScript Project Template**! This repository serves as a starter template for building Node.js applications with TypeScript. It comes pre-configured with models, controllers, routes, and bundling, so you can focus on building your application.
+Welcome to the **Node, Express and TypeScript Project Template**! This repository serves as a starter template for
+building Node.js applications with TypeScript. It comes pre-configured with models, controllers, routes, and bundling,
+so you can focus on building your application.
 
 ## Features
 
@@ -15,13 +17,13 @@ Welcome to the **Node, Express and TypeScript Project Template**! This repositor
 ```
 ├── src
 │   ├── controllers
-│   │   └── exampleController.ts
+│   │   └── snippetController.ts
 │   ├── middleware
 │   │   └── exampleMiddleware.ts
 │   ├── models
-│   │   └── exampleModel.ts
+│   │   └── snippetModel.ts
 │   ├── routes
-│   │   └── exampleRoutes.ts
+│   │   └── snippetRoutes.ts
 │   └── server.ts    // Main entry point of the application
 ├── dist             // Compiled output (auto-generated)
 ├── package.json     // Project dependencies and scripts

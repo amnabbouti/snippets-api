@@ -12,19 +12,24 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": "",
+  "description": "Welcome to the **Node, Express and TypeScript Project Template**! This repository serves as a starter template for building Node.js applications with TypeScript. It comes pre-configured with models, controllers, routes, and bundling, so you can focus on building your application.",
   "dependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.12.1"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7",
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^22.13.10",
+    "nodemon": "^3.1.9",
     "pkgroll": "^2.6.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   }
 }
