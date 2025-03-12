@@ -2,7 +2,7 @@ body{
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #e0e0e0;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@ body{
 
 h1{
     text-align: center;
-    color: #4CAF50;
+    color: #388E3C;
     margin: 20px 0;
 }
 
@@ -20,7 +20,7 @@ h1{
     max-width: 600px;
     margin-bottom: 30px;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #bbb;
     border-radius: 5px;
     background-color: #fff;
     display: flex;
@@ -45,7 +45,7 @@ h1{
         input[type="number"],
         textarea{
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #999;
             border-radius: 3px;
             width: 100%;
             box-sizing: border-box;
@@ -58,7 +58,7 @@ h1{
     
     button{
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: #388E3C;
         color: white;
         border: none;
         border-radius: 3px;
@@ -66,8 +66,111 @@ h1{
         align-self: flex-start;
         
         &:hover{
-            background-color: #45a049;
+            background-color: #2e7d32;
         }
     }
 }
 
+.filters{
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    
+    input{
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #999;
+        border-radius: 3px;
+    }
+    
+    button{
+        padding: 10px 20px;
+        background-color: #1976D2;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        
+        &:hover{
+            background-color: #1565c0;
+        }
+    }
+}
+
+table{
+    width: 80%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    
+    th, td{
+        border: 1px solid #bbb;
+        padding: 10px;
+        text-align: left;
+    }
+    
+    th{
+        background-color: #f5f5f5;
+        color: #333;
+    }
+    
+    tr:nth-child(even){
+        background-color: #f9f9f9;
+    }
+    
+    pre{
+        margin: 0;
+        white-space: pre-wrap;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #2d2d2d;
+        color: #f8f8f2;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    td button{
+        padding: 5px 10px;
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        
+        &:hover{
+            background-color: #c62828;
+        }
+    }
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    
+    button{
+        padding: 10px 20px;
+        background-color: #1976D2;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        
+        &:hover{
+            background-color: #1565c0;
+        }
+        
+        &:disabled{
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+    
+    span{
+        font-size: 1.2em;
+    }
+}
