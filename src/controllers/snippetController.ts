@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import Snippet, {ISnippet} from '../models/snippetModel';
 import {config} from '../config/config';
 
+// createSnippet function
 export async function createSnippet(req: Request, res: Response) {
     try {
         const {title, code, language, tags, expiresIn} = req.body;
@@ -32,6 +33,7 @@ export async function createSnippet(req: Request, res: Response) {
     }
 }
 
+// getSnippet function / pagination / sorting
 export async function getAllSnippets(req: Request, res: Response) {
     try {
         const {
@@ -42,14 +44,12 @@ export async function getAllSnippets(req: Request, res: Response) {
             sort = 'createdAt',
             order = 'desc',
         } = req.query;
-
         const query: any = {
             $or: [
                 {expiresAt: {$exists: false}},
-                {expiresAt: {$gte: new Date()}} // Ensure only unexpired snippets are returned
+                {expiresAt: {$gte: new Date()}}
             ],
         };
-
         if (language) {
             query.language = {$regex: new RegExp(language as string, 'i')}; // Filter by language
         }
@@ -57,36 +57,24 @@ export async function getAllSnippets(req: Request, res: Response) {
             const tagArray = (tags as string).split(',').map((tag) => tag.trim());
             query.tags = {$all: tagArray.map((tag) => new RegExp(tag, 'i'))}; // Filter by tags
         }
-
-        // Pagination setup
         const pageNum = parseInt(page as string, 10);
         const limitNum = parseInt(limit as string, 10);
         const skip = (pageNum - 1) * limitNum;
         const sortOrder = order === 'desc' ? -1 : 1;
         const sortField = sort as string;
-
-        // Fetch the snippets with the pagination logic
         const snippets = await Snippet.find(query)
             .sort({[sortField]: sortOrder})
             .skip(skip)
             .limit(limitNum);
-
-        // Decode snippets
         const decodedSnippets = snippets.map((snippet) => ({
             ...snippet.toObject(),
             code: Buffer.from(snippet.code, 'base64').toString('utf-8'),
         }));
-
-        // Get the total number of snippets for pagination
         const total = await Snippet.countDocuments(query);
-
-        // Fetch the distinct languages for the dropdown filter
-        const languages = await Snippet.distinct('language'); // Get distinct languages
-
-        // Send the response
+        const languages = await Snippet.distinct('language');
         res.json({
             snippets: decodedSnippets,
-            availableLanguages: languages, // Include available languages for the dropdown
+            availableLanguages: languages,
             pagination: {
                 currentPage: pageNum,
                 totalPages: Math.ceil(total / limitNum),
@@ -99,7 +87,7 @@ export async function getAllSnippets(req: Request, res: Response) {
     }
 }
 
-
+// deleteSnippet function
 export async function deleteSnippet(req: Request, res: Response) {
     try {
         const {id} = req.params;
@@ -116,6 +104,7 @@ export async function deleteSnippet(req: Request, res: Response) {
     }
 }
 
+// updateSnippet function
 export async function updateSnippet(req: Request, res: Response) {
     try {
         const {id} = req.params;

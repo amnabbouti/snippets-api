@@ -4,7 +4,6 @@ import {config} from './config/config';
 import snippetRoutes from './routes/snippetRoutes';
 
 const app: Express = express();
-
 app.use(express.json());
 app.use(express.static('src/public'));
 app.set('view engine', 'ejs');
@@ -24,10 +23,10 @@ async function connectDB() {
 app.get('/', (req: Request, res: Response) => {
     res.render('index');
 });
-
 app.use('/api', snippetRoutes);
-
 app.listen(config.port, () => {
-    console.log(`Server running on port ${config.port} in ${config.nodeEnv} mode`);
+    console.log(
+        `Server running on port ${config.port} in ${config.nodeEnv} mode`,
+    );
     connectDB();
 });

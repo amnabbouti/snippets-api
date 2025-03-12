@@ -11,7 +11,7 @@ body{
 
 h1{
     text-align: center;
-    color: #388E3C;
+    color: darkblue;
     margin: 20px 0;
 }
 
@@ -41,8 +41,8 @@ h1{
             margin-bottom: 5px;
         }
         
-        input[type="text"],
-        input[type="number"],
+        input[type='text'],
+        input[type='number'],
         textarea{
             padding: 10px;
             border: 1px solid #999;
@@ -58,7 +58,7 @@ h1{
     
     button{
         padding: 10px 20px;
-        background-color: #388E3C;
+        background-color: #388e3c;
         color: white;
         border: none;
         border-radius: 3px;
@@ -87,7 +87,7 @@ h1{
     
     button{
         padding: 10px 20px;
-        background-color: #1976D2;
+        background-color: #1976d2;
         color: white;
         border: none;
         border-radius: 3px;
@@ -106,7 +106,8 @@ table{
     margin-bottom: 20px;
     background-color: #fff;
     
-    th, td{
+    th,
+    td{
         border: 1px solid #bbb;
         padding: 10px;
         text-align: left;
@@ -154,7 +155,7 @@ table{
     
     button{
         padding: 10px 20px;
-        background-color: #1976D2;
+        background-color: #1976d2;
         color: white;
         border: none;
         border-radius: 3px;
