@@ -5,10 +5,12 @@
   "exports": "./dist/server.mjs",
   "type": "module",
   "scripts": {
-    "dev": "npx tsx watch ./src/server.ts",
-    "build": "pkgroll --clean-dist --minify",
+    "seed": "npx tsx src/seeds/seedSnippets.ts",
+    "copy-assets": "cp -r src/views dist/ && cp -r src/public dist/",
+    "build": "pkgroll --clean-dist --minify && npm run copy-assets",
     "start": "node dist/server.mjs",
-    "seed": "npx tsx src/seeds/seedSnippets.ts"
+    "dev": "npx tsx watch ./src/server.ts",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\""
   },
   "keywords": [],
   "author": "",
@@ -26,11 +28,13 @@
     "mongoose": "^8.12.1"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/express": "^5.0.0",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^22.13.10",
     "nodemon": "^3.1.9",
     "pkgroll": "^2.6.1",
+    "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.8.2"

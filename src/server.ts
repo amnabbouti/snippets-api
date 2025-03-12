@@ -1,12 +1,16 @@
-import express, {Express, Request, Response} from 'express';
-import mongoose from 'mongoose';
-import {config} from './config/config';
+import express, { Express, Request, Response } from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import { config } from './config/config';
+import connectDB from './config/database';
+import { appMiddleware } from './middleware/appMiddleware';
+import { errorHandler } from './middleware/errorMiddleware';
+import { securityMiddleware } from './middleware/securityMiddleware';
 import snippetRoutes from './routes/snippetRoutes';
-import {securityMiddleware} from './middleware/securityMiddleware';
-import {errorHandler} from './middleware/errorMiddleware';
-import {appMiddleware} from './middleware/appMiddleware';
 
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app: Express = express();
 
 // Middleware
@@ -14,35 +18,19 @@ app.use(securityMiddleware);
 app.use(errorHandler);
 app.use(express.json());
 app.use(appMiddleware);
-app.use(express.static('src/public'));
 app.set('view engine', 'ejs');
-app.set('views', './src/views');
-
-// MongoDB connection
-async function connectDB() {
-    if (!config.mongoUri) {
-        console.error('MongoDB URI is not defined');
-        process.exit(1);
-    }
-
-    try {
-        await mongoose.connect(config.mongoUri);
-        console.log('Connected to MongoDB Atlas');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-        process.exit(1);
-    }
-}
+app.set('views', path.join(__dirname, './views'));
+app.use(express.static(path.join(__dirname, './public')));
 
 // Routes
 app.get('/', (req: Request, res: Response) => {
-    res.render('index');
+  res.render('index');
 });
 app.use('/api', snippetRoutes);
 
 // Start server
 const port = config.port;
 app.listen(port, () => {
-    console.log(`Server running on port ${port} in ${config.nodeEnv} mode`);
-    connectDB();
+  console.log(`Server running on port ${port} in ${config.nodeEnv} mode`);
+  connectDB();
 });
