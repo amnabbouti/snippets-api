@@ -7,7 +7,6 @@
 </head>
 <body>
     <h1>Code Snippets Dashboard</h1>
-
     <div class="create-form">
         <h2>Add New Snippet</h2>
         <form id="createSnippetForm">
@@ -34,13 +33,17 @@
             <button type="submit">Add Snippet</button>
         </form>
     </div>
-
     <div class="filters">
-        <input type="text" id="languageFilter" placeholder="Filter by language">
-        <input type="text" id="tagsFilter" placeholder="Filter by tags (comma-separated)">
-        <button>Filter</button>
-    </div>
+        <label for="languageFilter">Language</label>
+        <select id="languageFilter">
+            <option value="">Select a language</option>
+        </select>
 
+        <label for="tagsFilter">Tags</label>
+        <input type="text" id="tagsFilter" placeholder="Comma-separated tags"/>
+
+        <button id="filterButton">Filter</button>
+    </div>
     <table>
         <thead>
         <tr>
@@ -54,14 +57,11 @@
         <tbody id="snippetsTable">
         </tbody>
     </table>
-    
     <div class="pagination">
         <button id="previousPage" disabled>Previous</button>
         <span id="pageNumbers"></span>
         <button id="nextPage">Next</button>
     </div>
-
-
-    <script src="/index.js"></script> <!-- Include the frontend JS -->
+    <script src="/index.js"></script>
 </body>
 </html>
