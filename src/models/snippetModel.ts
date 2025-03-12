@@ -2,10 +2,11 @@ import {Schema, model, Document} from 'mongoose';
 
 export interface ISnippet extends Document {
     title: string;
-    code: string; // Will store base64 encoded string
+    code: string;
     language: string;
     tags: string[];
     expiresAt?: Date;
+    versionHistory: { code: string; updatedAt: Date }[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -16,6 +17,10 @@ const snippetSchema = new Schema<ISnippet>({
     language: {type: String, required: true},
     tags: [{type: String}],
     expiresAt: {type: Date},
+    versionHistory: [{
+        code: {type: String, required: true},
+        updatedAt: {type: Date, default: Date.now},
+    }],
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now},
 });

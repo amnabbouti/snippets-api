@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import Snippet, {ISnippet} from '../models/snippetModel';
 import {config} from '../config/config';
 
+// Create snippet
 export async function createSnippet(req: Request, res: Response) {
     try {
         const {title, code, language, tags, expiresIn} = req.body;
@@ -32,6 +33,7 @@ export async function createSnippet(req: Request, res: Response) {
     }
 }
 
+// get all snippets ( i should have used pagination here)
 export async function getAllSnippets(req: Request, res: Response) {
     try {
         const {
@@ -84,6 +86,7 @@ export async function getAllSnippets(req: Request, res: Response) {
     }
 }
 
+// Delete snippet
 export async function deleteSnippet(req: Request, res: Response) {
     try {
         const {id} = req.params;
@@ -95,6 +98,51 @@ export async function deleteSnippet(req: Request, res: Response) {
             console.log(`Snippet deleted: ${snippet.title}`);
         }
         res.status(204).send();
+    } catch (error: any) {
+        res.status(500).json({error: error.message});
+    }
+}
+
+// Update snippet
+export async function updateSnippet(req: Request, res: Response) {
+    try {
+        const {id} = req.params;
+        const {title, code, language, tags, expiresIn} = req.body;
+        const snippet = await Snippet.findById(id);
+        if (!snippet) {
+            return res.status(404).json({error: 'Snippet not found'});
+        }
+        if (snippet.expiresAt && snippet.expiresAt < new Date()) {
+            return res.status(404).json({error: 'Snippet has expired'});
+        }
+        snippet.versionHistory.push({
+            code: snippet.code,
+            updatedAt: new Date(),
+        });
+        const updatedData: Partial<ISnippet> = {};
+        if (title) updatedData.title = title;
+        if (code) updatedData.code = Buffer.from(code).toString('base64');
+        if (language) updatedData.language = language;
+        if (tags) updatedData.tags = tags;
+        if (expiresIn) updatedData.expiresAt = new Date(Date.now() + Number(expiresIn) * 1000);
+        updatedData.updatedAt = new Date();
+
+        const updatedSnippet = await Snippet.findByIdAndUpdate(
+            id,
+            {$set: updatedData},
+            {new: true}
+        );
+        if (!updatedSnippet) {
+            return res.status(404).json({error: 'Snippet not found'});
+        }
+        const decodedSnippet = {
+            ...updatedSnippet.toObject(),
+            code: Buffer.from(updatedSnippet.code, 'base64').toString('utf-8'),
+        };
+        if (config.nodeEnv === 'development') {
+            console.log(`Snippet updated: ${updatedSnippet.title}`);
+        }
+        res.json(decodedSnippet);
     } catch (error: any) {
         res.status(500).json({error: error.message});
     }
