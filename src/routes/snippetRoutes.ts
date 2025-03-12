@@ -1,11 +1,22 @@
-import {Router} from 'express';
-import {createSnippet, getAllSnippets, deleteSnippet, updateSnippet} from '../controllers/snippetController';
+import { RequestHandler, Router } from 'express';
+
+import {
+  createSnippet,
+  deleteSnippet,
+  getAllSnippets,
+  updateSnippet,
+} from '../controllers/snippetController';
 
 const router = Router();
 
-router.post('/snippets', createSnippet);
-router.get('/snippets', getAllSnippets);
-router.delete('/snippets/:id', deleteSnippet);
-router.put('/snippets/:id', updateSnippet);
+router
+  .route('/snippets')
+  .post(createSnippet as RequestHandler)
+  .get(getAllSnippets as RequestHandler);
+
+router
+  .route('/snippets/:id')
+  .delete(deleteSnippet as RequestHandler)
+  .put(updateSnippet as RequestHandler);
 
 export default router;

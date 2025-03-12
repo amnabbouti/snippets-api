@@ -1,5 +1,5 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 
 export const renderHome = (req: Request, res: Response) => {
-    res.render('index');
+  res.render('index');
 };
