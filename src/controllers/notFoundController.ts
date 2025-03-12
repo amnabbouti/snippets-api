@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import {Request, Response, NextFunction} from "express";
 
-export const notFound = (req: Request, res: Response) => {
-  res.status(404).json({
-    message: `The requested endpoint doesn't exist.`,
-    method: req.method,
-    endpoint: req.originalUrl,
-  });
+export const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
+    res.status(404).json({
+        error: 'Not Found',
+        message: `The requested endpoint doesn't exist.`,
+        method: req.method,
+        path: req.originalUrl,
+    });
 };
