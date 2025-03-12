@@ -33,4 +33,7 @@ tag, share, and manage code snippets. It includes a **RESTful API** backend and 
 - **Mongoose** - MongoDB Object Modeling tool for Node.js.
 - **EJS** - Template engine for rendering the frontend views.
 - **HTML/CSS/JavaScript** - For building the frontend dashboard.
-- 
+-
+
+![Screenshot 2025-03-12 165642.png](../../../Pictures/Screenshots/Screenshot%202025-03-12%20165642.png)
+![Screenshot 2025-03-12 165706.png](../../../Pictures/Screenshots/Screenshot%202025-03-12%20165706.png)
