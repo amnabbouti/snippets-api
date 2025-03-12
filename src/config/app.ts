@@ -18,7 +18,7 @@ export function configureApp(): Express {
 
     // View engine
     app.set('view engine', 'ejs');
-    app.set('views', './src/views');
+    app.set('views', '../../src/views');
 
     // Routes
     app.get('/', renderHome);
