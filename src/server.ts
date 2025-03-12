@@ -6,8 +6,9 @@ import snippetRoutes from './routes/snippetRoutes';
 const app: Express = express();
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('src/public'));
 app.set('view engine', 'ejs');
+app.set('views', './src/views');
 
 // MongoDB connection
 async function connectDB() {
@@ -19,6 +20,10 @@ async function connectDB() {
         process.exit(1);
     }
 }
+
+app.get('/', (req: Request, res: Response) => {
+    res.render('index');
+});
 
 app.use('/api', snippetRoutes);
 
