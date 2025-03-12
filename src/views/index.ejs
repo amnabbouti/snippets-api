@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Snippets Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Code Snippets Dashboard</h1>
+
+    <div class="create-form">
+        <h2>Add New Snippet</h2>
+        <form id="createSnippetForm">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div>
+                <label for="code">Code:</label>
+                <textarea id="code" name="code" required rows="4"></textarea>
+            </div>
+            <div>
+                <label for="language">Language:</label>
+                <input type="text" id="language" name="language" required>
+            </div>
+            <div>
+                <label for="tags">Tags (comma-separated):</label>
+                <input type="text" id="tags" name="tags">
+            </div>
+            <div>
+                <label for="expiresIn">Expires In (seconds):</label>
+                <input type="number" id="expiresIn" name="expiresIn" min="0">
+            </div>
+            <button type="submit">Add Snippet</button>
+        </form>
+    </div>
+
+    <div class="filters">
+        <input type="text" id="languageFilter" placeholder="Filter by language">
+        <input type="text" id="tagsFilter" placeholder="Filter by tags (comma-separated)">
+        <button>Filter</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Language</th>
+            <th>Tags</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="snippetsTable">
+        </tbody>
+    </table>
+
+    <script src="/index.js"></script> <!-- Include the frontend JS -->
+</body>
+</html>
